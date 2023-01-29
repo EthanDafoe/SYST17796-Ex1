@@ -7,32 +7,84 @@ package exercise1;
  *
  * @author dancye
  * @author Paul Bonenfant Jan 25, 2022 
+ * @author Ethan Dafoe Jan 28, 2023
  */
+import java.util.*;
 public class CardTrick {
     
     public static void main(String[] args) {
         
         Card[] hand = new Card[7];
-
+        Random rand = new Random();
+        Scanner input = new Scanner(System.in);
+        Boolean flag = false;
+        Boolean found = false;
+        Card userCard = new Card();
+        //loop to generate 7 random cards
         for (int i = 0; i < hand.length; i++) {
             Card card = new Card();
-            //card.setValue(insert call to random number generator here)
-            // 
-            //card.setSuit(Card.SUITS[insert call to random number between 0-3 here])
-            // Hint: You can use Random -> random.nextInt(n) to get a random number between 0 and n-1 (inclusive)
-            //       Don't worry about duplicates at this point
+            //generate a value from 1-13
+            card.setValue(rand.nextInt(13) + 1);
+            //generate a number from 1-4 and assign it a suit
+            card.setSuit(Card.SUITS[rand.nextInt(4)]);
+            hand[i] = card;
         }
-
-        // insert code to ask the user for Card value and suit, create their card
-        // and search the hand here. 
-        // Hint: You can ask for values 1 to 10, and then
-        //       11 for jack, 12 for queen, etc. (remember arrays are 0-based though)
-        //       1 for Hearts, 2 for Diamonds, etc. (remember arrays are 0-based though)
-        // 
-        // Then loop through the cards in the array to see if there's a match.
+        //loop to prompt to check for proper user input
+        while(!flag){
+            System.out.println("Please enter the value of a card (1-10, 11 = jack, 12 = queen, etc.): ");
+            int userVal = input.nextInt();
+            //check if the value is between 1-13
+            if (userVal > 0 && userVal < 14){
+                System.out.println("Please enter the value of a suit (1 = hearts, 2 = diamonds, 3 = spades, and 4 = clubs): ");
+                int userSuit = input.nextInt();
+                //switch to check if the suit is 1-4 and to set it
+                switch(userSuit-1) {
+                    case 0:
+                        userCard.setValue(userVal);
+                        userCard.setSuit(Card.SUITS[userSuit-1]);
+                        flag = true;
+                        break;
+                    case 1:
+                        userCard.setValue(userVal);
+                        userCard.setSuit(Card.SUITS[userSuit-1]);
+                        flag = true;
+                        break;
+                    case 2:
+                        userCard.setValue(userVal);
+                        userCard.setSuit(Card.SUITS[userSuit-1]);
+                        flag = true;
+                        break;
+                    case 3:
+                        userCard.setValue(userVal);
+                        userCard.setSuit(Card.SUITS[userSuit-1]);
+                        flag = true;
+                        break;
+                    default:
+                        System.out.println("Please pick a viable number");
+                }
+            }
+            else {
+                System.out.println("Please enter a viable number");
+            }
+        }
+        //loop to check if the user's card matches a card in the hand
+        for (int i = 0; i < hand.length; i++) {
+            int hVal = hand[i].getValue();
+            int uVal = userCard.getValue();
+            String hSuit = hand[i].getSuit();
+            String uSuit = userCard.getSuit();
+            if (hVal == uVal && hSuit.equals(uSuit)) {
+                found = true;
+            }
+        }
+            
         
-        // If the guess is successful, invoke the printInfo() method below.
-        
+        //print info if there is a match, print message if there is not.
+        if (found == true) {
+            printInfo();
+        } else {
+            System.out.println("Your card is not in the hand.");
+        }      
     }
 
     /**
@@ -43,25 +95,6 @@ public class CardTrick {
     private static void printInfo() {
     
         System.out.println("Congratulations, you guessed right!");
-        System.out.println();
-        
-        System.out.println("My name is Paul, but you can call me prof, Paul or sir");
-        System.out.println();
-        
-        System.out.println("My career ambitions:");
-        System.out.println("-- Be more active on LinkedIn");
-        System.out.println("-- Have a semester with no violations of academic integrity!");
-	System.out.println();	
-
-        System.out.println("My hobbies:");
-        System.out.println("-- Investing");
-        System.out.println("-- Cooking");
-        System.out.println("-- Reading/Watching TV");
-        System.out.println("-- Riding my motorcycle");
-
-        System.out.println();
-        
-    
     }
 
 }
